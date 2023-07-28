@@ -3,6 +3,7 @@ using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 
+
 namespace ImageNormalizerLibrary
 {
     public class ImageNormalizer
