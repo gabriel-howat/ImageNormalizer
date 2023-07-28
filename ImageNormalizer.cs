@@ -1,10 +1,7 @@
 ﻿using System.Drawing;
-using System;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
-using static System.Net.Mime.MediaTypeNames;
-using System.Drawing.Imaging;
 
 namespace ImageNormalizerLibrary
 {
