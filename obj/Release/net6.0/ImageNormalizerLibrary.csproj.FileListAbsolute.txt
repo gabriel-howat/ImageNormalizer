@@ -1,0 +1,12 @@
+C:\Dropbox\Projetos\C#\ImageNormalizerLibrary\bin\Release\net6.0\ImageNormalizerLibrary.deps.json
+C:\Dropbox\Projetos\C#\ImageNormalizerLibrary\bin\Release\net6.0\ImageNormalizerLibrary.dll
+C:\Dropbox\Projetos\C#\ImageNormalizerLibrary\bin\Release\net6.0\ImageNormalizerLibrary.pdb
+C:\Dropbox\Projetos\C#\ImageNormalizerLibrary\obj\Release\net6.0\ImageNormalizerLibrary.csproj.AssemblyReference.cache
+C:\Dropbox\Projetos\C#\ImageNormalizerLibrary\obj\Release\net6.0\ImageNormalizerLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dropbox\Projetos\C#\ImageNormalizerLibrary\obj\Release\net6.0\ImageNormalizerLibrary.AssemblyInfoInputs.cache
+C:\Dropbox\Projetos\C#\ImageNormalizerLibrary\obj\Release\net6.0\ImageNormalizerLibrary.AssemblyInfo.cs
+C:\Dropbox\Projetos\C#\ImageNormalizerLibrary\obj\Release\net6.0\ImageNormalizerLibrary.csproj.CoreCompileInputs.cache
+C:\Dropbox\Projetos\C#\ImageNormalizerLibrary\obj\Release\net6.0\ImageNormalizerLibrary.dll
+C:\Dropbox\Projetos\C#\ImageNormalizerLibrary\obj\Release\net6.0\refint\ImageNormalizerLibrary.dll
+C:\Dropbox\Projetos\C#\ImageNormalizerLibrary\obj\Release\net6.0\ImageNormalizerLibrary.pdb
+C:\Dropbox\Projetos\C#\ImageNormalizerLibrary\obj\Release\net6.0\ref\ImageNormalizerLibrary.dll

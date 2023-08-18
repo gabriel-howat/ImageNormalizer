@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>ImageNormalizerLibrary</id>
+    <version>1.0.0</version>
+    <authors>ImageNormalizerLibrary</authors>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="Emgu.CV" version="4.7.0.5276" exclude="Build,Analyzers" />
+        <dependency id="Emgu.CV.runtime.windows" version="4.7.0.5276" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Dropbox\Projetos\C#\ImageNormalizerLibrary\bin\Release\net6.0\ImageNormalizerLibrary.dll" target="lib\net6.0\ImageNormalizerLibrary.dll" />
+  </files>
+</package>
