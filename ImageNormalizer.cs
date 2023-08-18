@@ -13,10 +13,11 @@ namespace ImageNormalizerLibrary
         public string? OutputFilePath { get; set; }
         public string? OutputFileName { get; set; }
         public string? ImageBase64 { get; set; }
+        public Stream? ImageStream { get; set; }
 
         private Mat originalImage = new();
 
-        public Mat outputImage;
+        private Mat outputImage = new();
 
         public ImageNormalizer(string base64, string newFileName, string newFilePath)
         {
@@ -30,12 +31,42 @@ namespace ImageNormalizerLibrary
             ImageBase64 = base64;
         }
 
+        public ImageNormalizer(Stream imageStream)
+        {
+            ImageStream = imageStream;
+        }
+
+
         public ImageNormalizer(string oldFilePath, string oldFileName, string newFileName, string newFilePath)
         {
             FilePath = oldFilePath;
             FileName = oldFileName;
             OutputFileName = newFileName;
             OutputFilePath = newFilePath;
+        }
+
+        private async Task<Mat> PreProcessImageStream(int newHeight)
+        {
+
+            if (ImageStream is null)
+                throw new NullReferenceException(nameof(ImageStream));
+
+            using var memoryStream = new MemoryStream();
+            await ImageStream.CopyToAsync(memoryStream);
+            Mat originalMat = new Mat();
+
+            await Task.Run(() => CvInvoke.Imdecode(memoryStream.ToArray(), ImreadModes.Color, originalMat));
+
+            originalMat = ResizeMatByHeight(originalMat, newHeight);
+
+            Mat grayscaleImage = new Mat();
+            CvInvoke.CvtColor(originalMat, grayscaleImage, ColorConversion.Bgr2Gray);
+
+            Mat binaryImage = new Mat();
+            CvInvoke.Threshold(grayscaleImage, binaryImage, 200, 255, ThresholdType.Binary);
+            grayscaleImage.Dispose();
+
+            return binaryImage;
         }
 
         private async Task<Mat> PreProcessImagePath()
@@ -141,6 +172,8 @@ namespace ImageNormalizerLibrary
 
         public async Task<string> GetBase64Image()
         {
+            if (outputImage == null)
+                throw new InvalidOperationException("No image data available.");
             // Save the image in JPEG format to a MemoryStream
             using (MemoryStream ms = new MemoryStream())
             {
@@ -156,14 +189,35 @@ namespace ImageNormalizerLibrary
             }
         }
 
+        public async Task<Stream> GetImageStreamAsync()
+        {
+            if (outputImage == null)
+                throw new InvalidOperationException("No image data available.");
+
+            using (var memoryStream = new MemoryStream())
+            {
+                byte[] imageBytes = await Task.Run(() => CvInvoke.Imencode(".jpg", outputImage).ToArray());
+
+                await memoryStream.WriteAsync(imageBytes, 0, imageBytes.Length);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+
+                return memoryStream;
+            }
+        }
+
         public async Task Normalize(int targetHeight, int finishSize)
         {
             Mat binaryImage;
 
+
             if (ImageBase64 != null)
                 binaryImage = await PreProcessImageBase64(finishSize);
-            else
+            else if (!string.IsNullOrEmpty(FilePath) && !string.IsNullOrEmpty(FileName))
                 binaryImage = await PreProcessImagePath();
+            else if (ImageStream != null)
+                binaryImage = await PreProcessImageStream(finishSize);
+            else
+                throw new InvalidOperationException("No valid input data provided.");
 
 
             Rectangle boundingBox = await GetBoundingRect(binaryImage);
@@ -198,6 +252,7 @@ namespace ImageNormalizerLibrary
 
                     // Save the final image to the specified output path
                     outputImage = whiteBackground;
+                    
                     //outputBitmap = BitmapExtension.ToBitmap(outputImage);
                 }
             }
